@@ -16,7 +16,7 @@ CREATE TABLE positions (
     salary DECIMAL,
     department_id INT NOT NULL,
     PRIMARY KEY (id)
-    -- FOREIGN KEY (department_id) REFERENCES departments(id)
+    FOREIGN KEY (department_id) REFERENCES departments(id)
 );
 
 CREATE TABLE employees (
@@ -26,6 +26,6 @@ CREATE TABLE employees (
     position_id INT NOT NULL,
     manager_id INT NOT NULL,
     PRIMARY KEY (id)
-    -- FOREIGN KEY (position_id) REFERENCES positions(id),
-    -- FOREIGN KEY (manager_id) REFERENCES employees(id)
+    FOREIGN KEY (position_id) REFERENCES positions(id),
+    FOREIGN KEY (manager_id) REFERENCES employees(id)
 );

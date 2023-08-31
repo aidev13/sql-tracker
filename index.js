@@ -11,7 +11,8 @@ const mainMenu = () => {
             choices: [
                 'Departments',
                 'Employees',
-                'Positions'
+                'Positions',
+                'Exit app'
             ]
         }
     ])
@@ -27,6 +28,11 @@ const mainMenu = () => {
         else if(mainList === 'Positions') {
             console.log('| POSITIONS |')
             allPositions()
+        }
+        else if(mainList === 'Exit app') {
+            console.clear()
+            console.log('Bye!')
+            process.exit()
         }
     })
     .catch((err) => {
