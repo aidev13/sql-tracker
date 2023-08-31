@@ -12,6 +12,10 @@ const mainMenu = () => {
                 'Departments',
                 'Employees',
                 'Positions',
+                'Add a deparment',
+                'Add a Position',
+                'Add an employee',
+                'Update employee status',
                 'Exit app'
             ]
         }
@@ -29,6 +33,10 @@ const mainMenu = () => {
             console.log('| POSITIONS |')
             allPositions()
         }
+        else if(mainList === 'Add a deparment') {
+            console.clear()
+            addDept()
+        }
         else if(mainList === 'Exit app') {
             console.clear()
             console.log('Bye!')
@@ -43,37 +51,48 @@ const mainMenu = () => {
 // calling main menu on node load
 mainMenu()
 
-// departments
-
+// --- Departments ---
+// view all current department
 const allDept = async () => {
-
     const sql = `SELECT * FROM departments`;
     const [getdata] = await connection.promise().query(sql);
     console.table(getdata);
-
-    subOptions()
+    subOptions();
+}
+// add a department
+const addDept = () => {
+    inquirer
+    .prompt([
+        {
+            type: 'input',
+            name: 'deptInput',
+            message: 'Please enter a new department name: ',
+        }
+    ])
+    .then(({ deptInput }) => {
+    const sql = `INSERT INTO departments (name) VALUES (${deptInput})`
+    subOptions();
+    })
 }
 
 
-// employees
+// --- Employees ---
 const allEmployees = async () => {
-
     const sql = `SELECT * FROM employees`;
     const [getdata] = await connection.promise().query(sql);
     console.table(getdata);
-
-    subOptions()
+    subOptions();
 }
 
-// positions
+// --- Positions ---
 const allPositions = async () => {
-
     const sql = `SELECT * FROM positions`;
     const [getdata] = await connection.promise().query(sql);
     console.table(getdata);
-
-    subOptions()
+    subOptions();
 }
+
+
 
 // function to allow user to select another option...
 const subOptions = () => {
@@ -104,5 +123,6 @@ const subOptions = () => {
             throw err
         })
 }
+
 
 module.exports = mainMenu
