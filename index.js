@@ -17,15 +17,15 @@ const mainMenu = () => {
     ])
     .then(({ mainList }) => {
              if(mainList === 'Departments') {
-            console.log('Hello Departments!')
+            console.log('| DEPARTMENTS |')
             allDept();
         } 
         else if(mainList === 'Employees') {
-            console.log('Hello Employees!')
+            console.log('| EMPLOYEES |')
             allEmployees()
         } 
         else if(mainList === 'Positions') {
-            console.log('Hello Positions!')
+            console.log('| POSITIONS |')
             allPositions()
         }
     })
