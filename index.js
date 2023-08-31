@@ -70,7 +70,7 @@ const addDept = () => {
         }
     ])
     .then(({ deptInput }) => {
-    const sql = `INSERT INTO departments (name) VALUES (${deptInput})`
+    connection.query(`INSERT INTO departments (name) VALUES ('${deptInput}')`);
     subOptions();
     })
 }
@@ -83,6 +83,7 @@ const allEmployees = async () => {
     console.table(getdata);
     subOptions();
 }
+
 
 // --- Positions ---
 const allPositions = async () => {
