@@ -1,5 +1,5 @@
 const inquirer = require('inquirer');
-const connection = require('./db/connect') //mysql2 connection (if needed)
+const connection = require('./db/connect') //mysql2 connection
 
 const mainMenu = () => {
     inquirer
@@ -15,7 +15,7 @@ const mainMenu = () => {
                     'Add a department',
                     'Add an employee',
                     'Add a position',
-                    'Update employee status',
+                    'Update employee status/position',
                     'Exit app'
                 ]
             }
@@ -44,6 +44,11 @@ const mainMenu = () => {
             else if (mainList === 'Add a position') {
                 console.clear()
                 addPosition()
+            }
+            else if (mainList === 'Update employee status/position') {
+                console.clear()
+                console.log('!! Try Again Later !!')
+                subOptions()
             }
             else if (mainList === 'Exit app') {
                 console.clear()
@@ -78,7 +83,8 @@ const addDept = () => {
             }
         ])
         .then(({ deptInput }) => {
-            connection.query(`INSERT INTO departments (name) VALUES ('${deptInput}')`);
+            const sql = `INSERT INTO departments (name) VALUES ('${deptInput}')`
+            connection.query(sql);
             subOptions();
         })
 }
@@ -113,7 +119,7 @@ const addEmployee = () => {
             {
                 type: 'input',
                 name: 'manager_id',
-                message: 'Enter a managers ID for employee: '
+                message: 'Enter a managers ID for employees: '
             }
         ])
         .then(({ first_name, last_name, position_id, manager_id }) => {
@@ -162,6 +168,25 @@ const addPosition = () => {
             subOptions();
         })
 }
+
+// // updating employee
+// const updateEmployee = () => {
+//     inquirer
+//         .prompt([
+//             {
+//                 type: 'input',
+//                 name: 'updatedRole',
+//                 message: 'Enter employees new position ID: '
+//             }
+//         ])
+//         .then(({ updatedRole }) => {
+//             const sql = `UPDATE employees SET position_id WHERE ${'updatedRole'}`
+//             connection.query(sql, (err, result) => {
+//                 if (err) throw err
+//             })
+//             subOptions();
+//         })
+// }
 
 
 
