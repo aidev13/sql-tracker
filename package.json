@@ -1,0 +1,17 @@
+{
+  "name": "sql-tracker",
+  "version": "1.0.0",
+  "description": "Build a data tracker using MySQL and inquirer",
+  "main": "index.js",
+  "type": "commonjs",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "inquirer": "^8.2.4",
+    "mysql2": "^3.6.0"
+  }
+}
