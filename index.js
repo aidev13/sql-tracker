@@ -41,6 +41,10 @@ const mainMenu = () => {
                 console.clear()
                 addEmployee()
             }
+            else if (mainList === 'Add a position') {
+                console.clear()
+                addPosition()
+            }
             else if (mainList === 'Exit app') {
                 console.clear()
                 console.log('Bye!')
@@ -109,7 +113,7 @@ const addEmployee = () => {
             {
                 type: 'input',
                 name: 'manager_id',
-                message: 'Enter a managers ID for employee: ',
+                message: 'Enter a managers ID for employee: '
             }
         ])
         .then(({ first_name, last_name, position_id, manager_id }) => {
@@ -128,6 +132,35 @@ const allPositions = async () => {
     const [getdata] = await connection.promise().query(sql);
     console.table(getdata);
     subOptions();
+}
+// add a position
+const addPosition = () => {
+    inquirer
+        .prompt([
+            {
+                type: 'input',
+                name: 'title',
+                message: 'Enter position title: ',
+            },
+            {
+                type: 'input',
+                name: 'salary',
+                message: 'Enter salary: ',
+            },
+            {
+                type: 'input',
+                name: 'department_id',
+                message: 'Enter department ID: '
+            }
+        ])
+        .then(({ title, salary, department_id }) => {
+            const sql = `INSERT INTO positions (title, salary, department_id) 
+            VALUES ('${title}', '${salary}', '${department_id}')`
+            connection.query(sql, (err, result) => {
+                if (err) throw err
+            })
+            subOptions();
+        })
 }
 
 
