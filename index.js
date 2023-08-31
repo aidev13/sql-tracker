@@ -47,8 +47,9 @@ const mainMenu = () => {
             }
             else if (mainList === 'Update employee status/position') {
                 console.clear()
-                console.log('!! Try Again Later !!')
-                subOptions()
+                // console.log('!! Try Again Later !!')
+                // subOptions()
+                updateEmployee()
             }
             else if (mainList === 'Exit app') {
                 console.clear()
@@ -169,24 +170,46 @@ const addPosition = () => {
         })
 }
 
-// // updating employee
-// const updateEmployee = () => {
-//     inquirer
-//         .prompt([
-//             {
-//                 type: 'input',
-//                 name: 'updatedRole',
-//                 message: 'Enter employees new position ID: '
-//             }
-//         ])
-//         .then(({ updatedRole }) => {
-//             const sql = `UPDATE employees SET position_id WHERE ${'updatedRole'}`
-//             connection.query(sql, (err, result) => {
-//                 if (err) throw err
-//             })
-//             subOptions();
-//         })
-// }
+// updating employee
+const updateEmployee = async () => {
+    // get list of employees and  id
+    // get list of position id
+const [POSITIONS] = await connection.promise().query(`SELECT title, id FROM positions`)
+const [employees] = await connection.promise().query(`SELECT * FROM employees`)
+    inquirer
+        .prompt([
+            {
+                type: 'list',
+                name: 'employeeID',
+                message: 'Which employee do you want to update? ',
+                choices: employees.map(employee => {
+                    return {
+                        name: `${employee.first_name} ${employee.last_name}`,
+                        value: employee.id
+                    }
+                }) 
+            },
+            {
+                type: 'list',
+                name: 'updatedPosition',
+                message: 'Enter new position: ',
+                choices: POSITIONS.map(position => {
+                    return {
+                        name: position.title,
+                        value: position.id
+                    }
+                }) 
+            }
+        ])
+        .then(({ employeeID, updatedPosition }) => {
+            const sql = `UPDATE employees SET position_id = ? WHERE employees.id = ?`
+            connection.query(sql, [updatedPosition, employeeID], (err, result) => {
+                if (err) throw err
+            })
+
+            subOptions();
+        })
+}
 
 
 
